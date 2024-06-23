@@ -1,0 +1,91 @@
+create database guvizenclass;
+use guvizenclass;
+
+# users table
+
+create table users(
+  userid int primary key auto_increment,
+  username varchar(255),
+  email varchar(100),
+  password varchar(45),
+  role varchar(100),
+  created_date datetime,
+  updated_date datetime,
+  batch varchar(45),
+);
+
+# course
+
+create table course(
+course_id int auto_increment primary key,
+userid int,
+course_name varchar(25),
+course_duration varchar(255),
+course_fees varchar(45),
+foreign key(userid) references user(userid)
+);
+
+# admission
+
+create table admission(
+userid int,
+course_id int,
+admission_fees varchar(45),
+foreign key(userid) references user(userid),
+foreign key(course_id) references course(course_id)
+);
+
+# codekata
+
+create table codekata(
+userid int,
+solved_problem varchar(25) not null,
+foreign key(userid) references user(userid)
+);
+
+# mentor
+
+create table mentor(
+userid int,
+course_id int not null,
+mentor_name varchar(255) ,
+foreign key(userid) references user(userid),
+foreign key(course_id) references course(course_id)
+);
+
+#attendance
+
+create table attendance(
+attendance_id int,
+userid int,
+attendance_time datetime default CURRENT_TIMESTAMP,
+status tinyint default 1,
+foreign key(userid) references user(userid)
+);
+
+# tasks
+create table tasks(
+userid int,
+submited_task varchar(45) not null,
+task_marks varchar(45) ,
+foreign key(userid) references user(userid)
+);
+
+# leaderboard
+
+create table leaderboard(
+userid int,
+course_id int,
+batch varchar(45) not null,
+submited_task varchar(45) not null,
+foreign key(userid) references user(userid),
+foreign key(course_id) references course(course_id)
+);
+
+# queries
+create table queries (
+userid int,
+topics varchar(2499),
+queries varchar(2499),
+foreign key (userid) references user(userid)
+);
